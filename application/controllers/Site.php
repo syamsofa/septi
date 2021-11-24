@@ -3,6 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Site extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('model_device');
+        $this->load->model('model_location');
+        $this->load->model('model_location_building');
+        $this->load->model('model_location_place');
+    }
 
     public function index()
     {
@@ -34,16 +42,19 @@ class Site extends CI_Controller
 
         $this->load->view('site', $data);
     }
-    public function jenis_perangkat()
+    public function tipe_device()
     {
         $data = array(
             'menu' => $this->uri->segment(2),
-            'judul' => 'Jenis Perangkat',
-            // 'satker' => $this->satker,
-            // 'organisasi' => $this->organisasi,
-            // 'satuan' => $this->satuan,
-            // 'pengguna' => $this->pengguna,
-            // 'pekerjaan' => $this->pekerjaan
+            'judul' => 'Tipe Device',
+            'kamus' =>
+            [
+                "device_type" => $this->model_device->show_device_type("", "", "yes"),
+                "location" => $this->model_location->show_location(),
+                "location_building" => $this->model_location_building->show_location_building(),
+                "location_place" => $this->model_location_place->show_location_place()
+            ]
+
 
         );
 

@@ -13,4 +13,24 @@ class Servicesdevice extends CI_Controller
     {
         echo json_encode($this->model_device->show_device_by_status());
     }
+
+    public function show_device_type()
+    {
+        echo json_encode($this->model_device->show_device_type("", "", "yes"));
+    }
+    public function show_device_by_type()
+    {
+        $type_id = $this->input->post('type_id');
+        echo json_encode($this->model_device->show_device_by_type($type_id));
+    }
+    public function show_device_by_id()
+    {
+        $device_id = $this->input->post('device_id');
+        echo json_encode($this->model_device->show_device("", "", $device_id));
+    }
+    public function add_device()
+    {
+        // print_r($this->input->post());
+        echo json_encode($this->model_device->add_device($this->input->post(),$_FILES));
+    }
 }
