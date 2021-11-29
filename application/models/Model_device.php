@@ -142,7 +142,7 @@ class Model_device extends CI_Model
             // Insert to database & create notification
             $query        = "INSERT INTO device_type 
         					(type_name, type_code, active, created_by, created_date, updated_by, updated_date) 
-        					VALUES ('$type_name', '$type_code', '$active', '".$this->session->userdata('Email')."', NOW(), '".$this->session->userdata('Email')."', NOW()) ";
+        					VALUES ('$type_name', '$type_code', '$active', '" . $this->session->userdata('Email') . "', NOW(), '" . $this->session->userdata('Email') . "', NOW()) ";
             $process      = $this->db->query($query);
             $notification = "Berhasil Tambah Tipe Device";
             // create log
@@ -153,7 +153,28 @@ class Model_device extends CI_Model
 
         return ["sukses" => $process, "pesan" => $notification];
     }
+    public function add_device_by_excel($file)
+    {
+        print_r($file['file_excel']['tmp_name']);
+        require "vendor/autoload.php";
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $spreadsheet = $reader->load($file['file_excel']['tmp_name']);
+        $worksheet = $spreadsheet->getActiveSheet();
 
+        // (B) LOOP THROUGH ROWS OF CURRENT WORKSHEET
+        foreach ($worksheet->getRowIterator() as $row) {
+            // (B1) READ CELLS
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+
+            // (B2) OUTPUT HTML
+            echo "<tr>";
+            foreach ($cellIterator as $cell) {
+                echo "<td>" . $cell->getValue() . "</td>";
+            }
+            echo "</tr>";
+        }
+    }
 
     public function add_device($dt_device, $dt_photo)
     {

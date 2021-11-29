@@ -29,7 +29,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Device List</h5>
                 <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</button>
-                <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Pakai Excel</button>
+                <button id="" onclick="show_device_by_excel_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Pakai Excel</button>
 
             </div>
             <div class="modal-body">
@@ -358,10 +358,38 @@
 
     </div>
 </div>
+<div class="modal fade" id="modalDeviceByExcelAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form class="form-horizontal" name="formDeviceByExcelAdd" id="formDeviceByExcelAdd" enctype="multipart/form-data">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Device Add Using Excel</h5>
+
+                </div>
+                <div class="modal-body form-horizontal" id="modal_content_device_detail">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Upload File</label>
+                        <div class="col-sm-6">
+                            <input type="file" class="form-control" name="file_excel" id="file_excel">
+                            <p class="help-block" id="photo_info">Download <a href="<?php echo base_url(); ?>assets/templates/import.xlsx">Template</a></p>
+                        </div>
+                    </div>
+
+                </div><!-- /.modal-dialog -->
+                <div class="modal-footer">
+                    <button class="btn btn-success"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Import</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 <div class="modal fade" id="modalDeviceTypeAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form class="form-horizontal" name="formDeviceTypeAdd" id="formDeviceTypeAdd" >
+            <form class="form-horizontal" name="formDeviceTypeAdd" id="formDeviceTypeAdd">
 
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Device Type Add</h5>
@@ -598,6 +626,12 @@
 
     }
 </script>
+<script>
+    function show_device_by_excel_add() {
+        $('#modalDeviceByExcelAdd').modal('show');
+
+    }
+</script>
 
 <script>
     function show_device_type_add() {
@@ -609,7 +643,7 @@
 <script>
     $("#formDeviceAdd").submit(function(event) {
 
-      
+
         $.ajax({
             // cache: true,
             type: "POST",
@@ -643,12 +677,48 @@
     });
 </script>
 
+<script>
+    $("#formDeviceByExcelAdd").submit(function(event) {
+
+
+        $.ajax({
+            // cache: true,
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: '<?php echo base_url(); ?>/servicesdevice/add_device_by_excel',
+            dataType: 'json',
+            data: new FormData($("#formDeviceByExcelAdd")[0]),
+            success: function(output) {
+                // $("#buttonSubmit").html(" Login ");
+                console.log(output)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: output.pesan,
+                    footer: '.'
+                })
+
+                formDeviceByExcelAdd.reset()
+
+
+            }
+
+        })
+        event.preventDefault()
+
+
+
+
+    });
+</script>
 
 <script>
     $("#formDeviceTypeAdd").submit(function(event) {
 
         // console.log($(this).serialize())
-      
+
         $.ajax({
             // cache: true,
             type: "POST",

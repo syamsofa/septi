@@ -33,6 +33,12 @@ class Servicesdevice extends CI_Controller
         // print_r($this->input->post());
         echo json_encode($this->model_device->add_device($this->input->post(),$_FILES));
     }
+    public function add_device_by_excel()
+    {
+        // print_r($this->input->post());
+        echo json_encode($this->model_device->add_device_by_excel($_FILES));
+    }
+    
     public function add_device_type()
     {
         // print_r("SSS");
