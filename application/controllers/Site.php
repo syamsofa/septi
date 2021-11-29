@@ -60,6 +60,24 @@ class Site extends CI_Controller
 
         $this->load->view('site', $data);
     }
+    public function system_log()
+    {
+        $data = array(
+            'menu' => $this->uri->segment(2),
+            'judul' => 'System Log',
+            'kamus' =>
+            [
+                "device_type" => $this->model_device->show_device_type("", "", "yes"),
+                "location" => $this->model_location->show_location(),
+                "location_building" => $this->model_location_building->show_location_building(),
+                "location_place" => $this->model_location->show_location_detail_by_type('place')
+            ]
+
+
+        );
+
+        $this->load->view('site', $data);
+    }
     public function logout()
     {
         $array_items = array('Nama', 'Email', 'UrlPicture');

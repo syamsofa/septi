@@ -6,6 +6,13 @@ class Model_system extends CI_Model
     {
       
     }
+    public function show_system_logs()
+	{
+		$query  = "SELECT log_date, username, description FROM system_logs ORDER BY log_date DESC";
+		return $this->db->query($query)->result_array();
+		// return $result;
+	}
+
     public function save_system_log($username, $query)
 	{
 		// Check query process
