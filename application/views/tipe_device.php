@@ -1,6 +1,7 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
+        <button id="" onclick="show_device_type_add()" type="button" class="btn btn-success float-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Type</button>
 
     </div>
     <div class="card-body">
@@ -27,7 +28,8 @@
 
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Device List</h5>
-                <button id="" onclick="show_device_add()" type="button" class="btn btn-success float-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</button>
+                <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</button>
+                <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Pakai Excel</button>
 
             </div>
             <div class="modal-body">
@@ -171,17 +173,17 @@
                     <div id="only_add">
                         <div class="form-group">
                             <label class="control-label col-sm-3">Device Code</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <p class="form-control-static" id="dev_code_view"></p>
-                                <input type="text" name="dev_code" id="dev_code" value="">
+                                <input autocomplete="off" type="text" name="dev_code" id="dev_code" value="" require>
                                 <!-- <p class="help-block">If you assign 'devtype' in device code format, the code will change based on your device type.</p> -->
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-3">Device Type</label>
-                            <div class="col-sm-6">
-                                <select class="form-control chosen-select" name="dev_type_id" id="dev_type_id" data-placeholder="Device Type">
-                                    <option value=""></option>
+                            <div class="col-sm-9">
+                                <select class="form-control chosen-select" name="dev_type_id" id="dev_type_id" data-placeholder="Device Type" require>
+                                    <option value="">--Pilih--</option>
                                     <?php
                                     foreach ($device_type as $row) {
                                         echo "<option value='" . $row['type_id'] . "'>" . $row['type_name'] . "</option>";
@@ -196,29 +198,29 @@
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Tahun Perolehan</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="dev_tahun" id="dev_tahun" <?php if (isset($_SESSION["new_dev_tahun"])) {
-                                                                                                        echo " value='" . $_SESSION["new_dev_tahun"] . "'";
-                                                                                                        unset($_SESSION['new_dev_tahun']);
-                                                                                                    } ?>>
+                        <div class="col-sm-9">
+                            <input autocomplete="off" type="text" class="form-control" name="dev_tahun" id="dev_tahun" <?php if (isset($_SESSION["new_dev_tahun"])) {
+                                                                                                                            echo " value='" . $_SESSION["new_dev_tahun"] . "'";
+                                                                                                                            unset($_SESSION['new_dev_tahun']);
+                                                                                                                        } ?> require>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">No BMN</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="dev_bmn" id="dev_bmn" <?php if (isset($_SESSION["new_dev_bmn"])) {
-                                                                                                    echo " value='" . $_SESSION["new_dev_bmn"] . "'";
-                                                                                                    unset($_SESSION['new_dev_bmn']);
-                                                                                                } ?>>
+                        <div class="col-sm-9">
+                            <input autocomplete="off" type="text" class="form-control" name="dev_bmn" id="dev_bmn" <?php if (isset($_SESSION["new_dev_bmn"])) {
+                                                                                                                        echo " value='" . $_SESSION["new_dev_bmn"] . "'";
+                                                                                                                        unset($_SESSION['new_dev_bmn']);
+                                                                                                                    } ?> require>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Merk/Brand</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="dev_brand" id="dev_brand" required>
+                                <input autocomplete="off" type="text" class="form-control" name="dev_brand" id="dev_brand" require>
                                 <div class="input-group-addon">*</div>
                             </div>
                         </div>
@@ -226,21 +228,21 @@
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Model</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="dev_model" id="dev_model" <?php if (isset($_SESSION["new_dev_model"])) {
-                                                                                                        echo " value='" . $_SESSION["new_dev_model"] . "'";
-                                                                                                        unset($_SESSION['new_dev_model']);
-                                                                                                    } ?>>
+                        <div class="col-sm-9">
+                            <input autocomplete="off" type="text" class="form-control" name="dev_model" id="dev_model" <?php if (isset($_SESSION["new_dev_model"])) {
+                                                                                                                            echo " value='" . $_SESSION["new_dev_model"] . "'";
+                                                                                                                            unset($_SESSION['new_dev_model']);
+                                                                                                                        } ?> require>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-3">Color</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="dev_color" id="dev_color" <?php if (isset($_SESSION["new_dev_color"])) {
-                                                                                                        echo " value='" . $_SESSION["new_dev_color"] . "'";
-                                                                                                        unset($_SESSION['new_dev_color']);
-                                                                                                    } ?>>
+                        <div class="col-sm-9">
+                            <input autocomplete="off" type="text" class="form-control" name="dev_color" id="dev_color" <?php if (isset($_SESSION["new_dev_color"])) {
+                                                                                                                            echo " value='" . $_SESSION["new_dev_color"] . "'";
+                                                                                                                            unset($_SESSION['new_dev_color']);
+                                                                                                                        } ?> require>
                         </div>
                     </div>
 
@@ -248,7 +250,7 @@
                         <label class="control-label col-sm-3">Serial Number</label>
                         <div class="col-sm-6">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="dev_serial" id="dev_serial">
+                                <input autocomplete="off" require type="text" class="form-control" name="dev_serial" id="dev_serial" require>
                             </div>
 
                         </div>
@@ -265,14 +267,14 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Asal Barang <br> Tulis Selengkapnya </br></label>
                         <div class="col-sm-8">
-                            <textarea class="form-control tinymce" name="dev_description" id="dev_description"> <?php if (isset($_SESSION["new_dev_description"])) {
-                                                                                                                    echo $_SESSION["new_dev_description"];
-                                                                                                                    unset($_SESSION['new_dev_description']);
-                                                                                                                } ?></textarea>
+                            <textarea require class="form-control tinymce" name="dev_description" id="dev_description"> <?php if (isset($_SESSION["new_dev_description"])) {
+                                                                                                                            echo $_SESSION["new_dev_description"];
+                                                                                                                            unset($_SESSION['new_dev_description']);
+                                                                                                                        } ?></textarea>
                             <!--<input type="text" class="form-control" name="dev_description" id="dev_description" <?php if (isset($_SESSION["new_dev_description"])) {
                                                                                                                         echo " value='" . $_SESSION["new_dev_description"] . "'";
                                                                                                                         unset($_SESSION['new_dev_description']);
-                                                                                                                    } ?>>-->
+                                                                                                                    } ?> >-->
                         </div>
                     </div>
 
@@ -281,8 +283,8 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Status</label>
                         <div class="col-sm-9">
-                            <select class="form-control chosen-select" name="dev_status" id="dev_status" data-placeholder="Status">
-                                <option value=""></option>
+                            <select require class="form-control chosen-select" name="dev_status" id="dev_status" data-placeholder="Status">
+                                <option value="">--Pilih--</option>
                                 <option value="new" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "new") {
                                                         echo "selected";
                                                     } ?>>New</option>
@@ -305,8 +307,8 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3">Ruang</label>
                         <div class="col-sm-6">
-                            <select class="form-control chosen-select" name="building_id" id="building_id" data-placeholder="Location">
-                                <option value=""></option>
+                            <select require class="form-control chosen-select" name="building_id" id="building_id" data-placeholder="Location">
+                                <option value="">--Pilih--</option>
                                 <?php
                                 foreach ($location_building as $row) {
                                     echo "<option value='" . $row['building_id'] . "'>" . $row['building_name'] . "</option>";
@@ -317,10 +319,25 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3">Alokasi</label>
+                        <label class="control-label col-sm-3">Sub Koordinator</label>
+                        <div class="col-sm-6">
+                            <select require class="form-control chosen-select" name="place_id" id="place_id" data-placeholder="Location">
+                                <option value="">--Pilih--</option>
+                                <?php
+                                foreach ($location_place as $row) {
+                                    echo "<option value='" . $row['place_id'] . "'>" . $row['place_name'] . "</option>";
+                                }
+                                ?>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Penanggung Jawab</label>
                         <div class="col-sm-6">
                             <select class="form-control chosen-select" name="location_id" id="location_id" data-placeholder="Location">
-                                <option value=""></option>
+                                <option value="">--Pilih--</option>
                                 <?php
                                 foreach ($location as $row) {
                                     echo "<option value='" . $row['location_id'] . "'>" . $row['location_name'] . "</option>";
@@ -341,10 +358,49 @@
 
     </div>
 </div>
+<div class="modal fade" id="modalDeviceTypeAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form class="form-horizontal" name="formDeviceTypeAdd" id="formDeviceTypeAdd" >
 
-<?php
-print_r($location);
-?>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Device Type Add</h5>
+
+                </div>
+                <div class="modal-body" id="modal_content_device_type">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Type Name</label>
+                        <div class="col-sm-9">
+                            <input type="hidden" name="type_id" id="type_id" value="">
+                            <input type="text" class="form-control" name="type_name" id="type_name" maxlength="30" required="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Type Code</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="type_code" id="type_code" maxlength="30" required="">
+                            <p class="help-block">A code to identify this device type. Usually contains the abbreviation of the name. (Ex : Monitor -&gt; MTR)</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Active</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="active" id="active">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Simpan</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
 
 <script>
     $.ajax({
@@ -483,6 +539,7 @@ print_r($location);
             },
             success: function(output) {
                 console.log(output)
+                output = output[0]
                 // {
                 //     "device_id": "9",
                 //     "type_id": "10",
@@ -543,20 +600,73 @@ print_r($location);
 </script>
 
 <script>
+    function show_device_type_add() {
+        $('#modalDeviceTypeAdd').modal('show');
+
+    }
+</script>
+
+<script>
     $("#formDeviceAdd").submit(function(event) {
 
-        var dataO = $(this)
-
-        console.log(dataO.serialize())
+      
         $.ajax({
             // cache: true,
             type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
             url: '<?php echo base_url(); ?>/servicesdevice/add_device',
-            dataType: 'text',
-            data: dataO.serialize(),
+            dataType: 'json',
+            data: new FormData($("#formDeviceAdd")[0]),
             success: function(output) {
                 // $("#buttonSubmit").html(" Login ");
                 console.log(output)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: output.pesan,
+                    footer: '.'
+                })
+
+                formDeviceAdd.reset()
+
+
+            }
+
+        })
+        event.preventDefault()
+
+
+
+
+    });
+</script>
+
+
+<script>
+    $("#formDeviceTypeAdd").submit(function(event) {
+
+        // console.log($(this).serialize())
+      
+        $.ajax({
+            // cache: true,
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: '<?php echo base_url(); ?>/servicesdevice/add_device_type',
+            dataType: 'json',
+            data: new FormData($("#formDeviceTypeAdd")[0]),
+            success: function(output) {
+                // $("#buttonSubmit").html(" Login ");
+                console.log(output)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: output.pesan,
+                    footer: '.'
+                })
 
 
             }

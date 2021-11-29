@@ -7,7 +7,9 @@ class Model_device extends CI_Model
         // $this->load->library('lib');
         // $this->load->library('lib_security');
         // $this->load->model('model_role');
+        $this->load->model('model_system');
         // $this->load->model('email_model');
+        $this->load->model('model_inventory');
         //call function
         // Your own constructor code
     }
@@ -41,16 +43,39 @@ class Model_device extends CI_Model
     }
     public function show_device_type($type_name = "", $type_code = "", $active = "")
     {
-        $query = $this->db->query("SELECT 
-        type_id, 
-        type_name, 
-        type_code, 
-        active, 
-        (SELECT COUNT(*) FROM device_list WHERE type_id = dt.type_id) as device_total  
-        FROM device_type AS dt ");
+        $query = "SELECT 
+					type_id, 
+					type_name, 
+					type_code, 
+					active, 
+					(SELECT COUNT(*) FROM device_list WHERE type_id = dt.type_id) as device_total  
+					FROM device_type AS dt ";
 
-        return $query->result_array();
+        // additional parameters?
+        if ($type_name != "" || $type_code != "" || $active != "") {
+            $query .= " WHERE ";
+
+            if ($type_name != "") {
+                $type_name = strtolower(trim($type_name));
+                $query     .= " type_name = '$type_name' ";
+            }
+            if ($type_code != "") {
+                $type_code = strtoupper(trim($type_code));
+                $query     .= " type_code = '$type_code' ";
+            }
+            if ($active != "") {
+                if ($type_name != "" || $type_code != "") {
+                    $query .= " AND ";
+                }
+                $query .= " active = '$active' ";
+            }
+        }
+        $query .= " ORDER BY type_name ASC";
+        // print_r($query);
+        return        $this->db->query($query)->result_array();
+        // return $process;
     }
+
     public function show_device($device_serial = "", $device_status = "", $device_id = "")
     {
         $query = "SELECT a.*, 
@@ -96,13 +121,43 @@ class Model_device extends CI_Model
         }
 
 
-        return $this->db->query($query)->result_array()[0];
+        return $this->db->query($query)->result_array();
     }
+    public function add_device_type($dt_type)
+    {
+        // print_r($dt_type);
+        // Set var
+        $type_name = addslashes(trim($dt_type["type_name"]));
+        $type_code = addslashes(strtoupper(trim($dt_type["type_code"])));
+        $active    = $dt_type["active"];
+
+        // // Check if device exists
+        // print_r($type_name, $type_code);
+        $type_check = count($this->show_device_type("", $type_code, $active));
+        if ($type_check > 0) {
+            // Send back with notification
+            $process = 0;
+            $notification = "|<br>Device type or code is already exists in the database!";
+        } else {
+            // Insert to database & create notification
+            $query        = "INSERT INTO device_type 
+        					(type_name, type_code, active, created_by, created_date, updated_by, updated_date) 
+        					VALUES ('$type_name', '$type_code', '$active', '".$this->session->userdata('Email')."', NOW(), '".$this->session->userdata('Email')."', NOW()) ";
+            $process      = $this->db->query($query);
+            $notification = "Berhasil Tambah Tipe Device";
+            // create log
+            if ($process > 0) {
+                $this->model_system->save_system_log($this->session->userdata('Email'), $query);
+            }
+        }
+
+        return ["sukses" => $process, "pesan" => $notification];
+    }
+
 
     public function add_device($dt_device, $dt_photo)
     {
-        print_r($dt_device);
-        // Set var
+
         $device_code        = $dt_device["dev_code"];
         $type_id            = $dt_device["dev_type_id"];
         $device_tahun       = addslashes(trim($dt_device["dev_tahun"]));
@@ -123,6 +178,7 @@ class Model_device extends CI_Model
 
         // Check if device exists
         $dev_check = count($this->show_device($device_serial));
+
         if ($dev_check > 0) {
             // Send back with notification
             $process                         = 0;
@@ -134,12 +190,11 @@ class Model_device extends CI_Model
             $_SESSION['new_dev_model']       = $device_model;
             $_SESSION['new_dev_serial']      = $device_serial;
             $_SESSION['new_dev_description'] = $device_description;
-            // $_SESSION['new_dev_status']      = $dev_status;
+            $_SESSION['new_dev_status']      = $device_status;
             $_SESSION['new_building_id']     = $building_id;
             $_SESSION['new_place_id']        = $place_id;
             $_SESSION['new_location_id']     = $location_id;
         } else {
-            // Check if dt_photo isn't empty
             if ($dt_photo != "") {
                 // Init var
                 $save_count   = 0;
@@ -147,14 +202,12 @@ class Model_device extends CI_Model
                 $notification = "";
 
                 foreach ($dt_photo as $photo_name => $photo_name_value) {
-                    // Set var
                     $location  = "./assets/images/device_photos/";
                     $file_name = $_FILES[$photo_name]['name'];
                     $file_size = $_FILES[$photo_name]['size'];
                     $file_tmp  = $_FILES[$photo_name]['tmp_name'];
                     $file_type = $_FILES[$photo_name]['type'];
 
-                    // If file name isn't empty
                     if ($file_name != "") {
                         // Check if file is the real image
                         $check_image = getimagesize($file_tmp);
@@ -163,6 +216,7 @@ class Model_device extends CI_Model
                             $extensions = array("png", "jpg", "jpeg", "gif");
                             $file_ext   = explode('.', $file_name);
                             $file_ext   = strtolower(end($file_ext));
+
                             if (in_array($file_ext, $extensions) === false) {
                                 $errors[] = "<br>Extension not allowed, please use png, jpg or gif file.";
                             }
@@ -180,7 +234,7 @@ class Model_device extends CI_Model
                                 // Upload
                                 move_uploaded_file($file_tmp, $location . $new_photo_name);
                                 // Create thumb
-                                $this->inventory->create_thumbnail($location . $new_photo_name, $location . $device_serial . "_thumbnail." . $file_ext, "200", "150");
+                                $this->model_inventory->create_thumbnail($location . $new_photo_name, $location . $device_serial . "_thumbnail." . $file_ext, "200", "150");
                                 $save_count = $save_count + 1;
                             } else {
                                 // Set error count flag and notification
@@ -201,14 +255,12 @@ class Model_device extends CI_Model
                         $notification .= "<br>Photo Uploaded successfully!";
                     }
                 }
-
                 $device_photo         = $location . $new_photo_name;
                 $process_photo_upload = $save_count;
             } else {
                 $device_photo         = "./assets/images/device_photos/standard_device.jpg";
                 $process_photo_upload = "1";
             }
-
             // if photo upload success 
             if ($process_photo_upload > 0) {
                 // Insert to database & create notification
@@ -248,15 +300,18 @@ class Model_device extends CI_Model
 					'$place_id',
 					'$location_id', 
 					'$device_deployment_date', 
-					'$_SESSION[username]', 
+					'" . $this->session->userdata('Email') . "', 
 					NOW(), 
-					'$_SESSION[username]', 
+					'" . $this->session->userdata('Email') . "', 
 					NOW()) ";
                 $process = $this->db->query($query);
                 // $notification = "|";
                 // create log
                 if ($process > 0) {
-                    $this->sysClass->save_system_log($_SESSION['username'], $query);
+                    $this->model_system->save_system_log(
+                        $this->session->userdata('Email'),
+                        $query
+                    );
                 }
             } else {
                 $process = 0;
@@ -268,7 +323,7 @@ class Model_device extends CI_Model
                 $_SESSION['new_dev_color']       = $device_color;
                 $_SESSION['new_dev_serial']      = $device_serial;
                 $_SESSION['new_dev_description'] = $device_description;
-                // $_SESSION['new_dev_status']      = $dev_status;
+                $_SESSION['new_dev_status']      = $device_status;
                 $_SESSION['new_building_id']     = $building_id;
                 $_SESSION['new_place_id']        = $place_id;
                 $_SESSION['new_location_id']     = $location_id;
@@ -276,6 +331,7 @@ class Model_device extends CI_Model
             }
         }
 
-        return $process . $notification;
+
+        return ["sukses" => $process, "pesan" => $notification];
     }
 }

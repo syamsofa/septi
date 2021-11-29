@@ -25,13 +25,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="<?php echo base_url(); ?>sb-admin/dist/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</head>
-
+    </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">SepTI BPS Rembang</a>
+
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -129,7 +130,7 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $judul; ?></li>
                     </ol>
-                    <?php $this->load->view($menu,$kamus); ?>
+                    <?php $this->load->view($menu, $kamus); ?>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
