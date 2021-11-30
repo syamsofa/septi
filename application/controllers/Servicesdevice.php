@@ -18,6 +18,14 @@ class Servicesdevice extends CI_Controller
     {
         echo json_encode($this->model_device->show_device_type("", "", "yes"));
     }
+
+    public function device_type_change_status()
+    {
+        print_r($this->input->post());
+        $type_id = $this->input->post('type_id');
+        $active = $this->input->post('active');
+        echo json_encode($this->model_device->device_type_change_status(['type_id' => $type_id, 'active' => $active]));
+    }
     public function show_device_by_type()
     {
         $type_id = $this->input->post('type_id');
@@ -31,14 +39,14 @@ class Servicesdevice extends CI_Controller
     public function add_device()
     {
         // print_r($this->input->post());
-        echo json_encode($this->model_device->add_device($this->input->post(),$_FILES));
+        echo json_encode($this->model_device->add_device($this->input->post(), $_FILES));
     }
     public function add_device_by_excel()
     {
         // print_r($this->input->post());
         echo json_encode($this->model_device->add_device_by_excel($_FILES));
     }
-    
+
     public function add_device_type()
     {
         // print_r("SSS");

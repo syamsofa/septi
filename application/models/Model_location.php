@@ -43,6 +43,14 @@ class Model_location extends CI_Model
             $query  = "SELECT * FROM $table_name ORDER BY $field_name ASC";
         }
         return $this->db->query($query)->result_array();
+    }
+    public function show_location_building($location_building_name = "")
+    {
+        $query = "SELECT 	l.*		FROM location_building l 
+			";
 
+
+
+        return $this->db->query($query)->result_array();
     }
 }

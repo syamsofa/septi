@@ -27,7 +27,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    </head>
+</head>
+
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
@@ -58,12 +59,12 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading">Dashboard</div>
                         <a class="nav-link" href="<?php echo base_url() . "site/dashboard"; ?>">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Perangkat</div>
+                        <div class="sb-sidenav-menu-heading">Manajemen</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Perangkat
@@ -72,7 +73,6 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="<?php echo base_url() . "site/tipe_device"; ?>">Tipe</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -82,21 +82,50 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link" href="<?php echo base_url() . "site/system_log"; ?>" >
+                                <a class="nav-link" href="<?php echo base_url() . "site/system_log"; ?>">
                                     System Log
                                 </a>
-                               
+
                             </nav>
                         </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="charts.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Charts
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            User
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <a class="nav-link" href="tables.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Tables
+                        <div class="collapse" id="collapseUser" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="<?php echo base_url() . "site/user"; ?>">
+                                    Daftar User
+                                </a>
+
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLocation" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-map-marker"></i></div>
+                            Location
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="collapseLocation" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="<?php echo base_url() . "site/location"; ?>">
+                                    Location
+                                </a>
+
+                            </nav>
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="<?php echo base_url() . "site/kf"; ?>">
+                                    Fungsi/Seksi
+                                </a>
+
+                            </nav>
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="<?php echo base_url() . "site/ruangan"; ?>">
+                                    Ruangan
+                                </a>
+
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -112,7 +141,7 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $judul; ?></li>
                     </ol>
-                    <?php $this->load->view($menu); ?>
+                    <?php $this->load->view($menu,$kamus); ?>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

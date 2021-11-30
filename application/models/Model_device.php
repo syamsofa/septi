@@ -13,6 +13,29 @@ class Model_device extends CI_Model
         //call function
         // Your own constructor code
     }
+    public function device_type_change_status($dt_type)
+    {
+        // assign variable
+        $type_id   = $dt_type["type_id"];
+        $active    = $dt_type["status"];
+
+        // create query
+        $query   = "UPDATE device_type 
+					SET active='$active', updated_by='" . $this->session->userdata('Email') . "', updated_date=NOW(), revision=revision+1 
+					WHERE type_id='$type_id'";
+
+        // edit to database
+        $process = $this->db->query($query);
+
+        // create system log
+        if ($process > 0) {
+            $this->model_system->save_system_log($this->session->userdata('Email'), $query);
+        }
+
+        return
+            ["sukses" => $process];
+    }
+
     public function show_device_by_type($type_id)
     {
         $query = $this->db->query("SELECT a.*, 
@@ -273,7 +296,7 @@ class Model_device extends CI_Model
 
                     // If error_count == 0 > SUCCESS!
                     if ($error_count == 0 && $notification == "" && $save_count > 0) {
-                        $notification .= "<br>Photo Uploaded successfully!";
+                        $notification .= "File foto device berhasil diupload!";
                     }
                 }
                 $device_photo         = $location . $new_photo_name;

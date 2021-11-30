@@ -11,6 +11,12 @@ class Servicespengguna extends CI_Controller
 
         // Your own constructor code
     }
+    public function read_pengguna()
+    {
+        $output = $this->model_pengguna->read_pengguna();
+
+        echo json_encode($output);
+    }
 
     public function LoginJatengklik()
     {

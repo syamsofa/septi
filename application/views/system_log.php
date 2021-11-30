@@ -1,18 +1,54 @@
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-right: 16px solid green;
+        border-bottom: 16px solid red;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<div class="loader"></div>
+
+<script>
+    $('.loader').show();
+</script>
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        <button id="" onclick="show_device_type_add()" type="button" class="btn btn-success float-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Type</button>
 
     </div>
     <div class="card-body">
-        <table id="tabelTipeDevice">
+        <table id="tabelSystemLog">
             <thead>
                 <tr>
-                    <th>Kode</th>
-                    <th>Tipe</th>
-                    <th>Aktiv</th>
-                    <th>Jumlah Device</th>
-                    <th>Detil</th>
+                    <th>No</th>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Description</th>
 
                 </tr>
             </thead>
@@ -434,37 +470,30 @@
     $.ajax({
         type: "POST",
         cache: false,
-        url: '<?php echo base_url(); ?>/servicesdevice/show_device_type',
+        url: '<?php echo base_url(); ?>/Servicessystem/show_system_logs',
         dataType: 'json',
         data: {},
         success: function(output) {
             console.log(output)
-            const tabelTipeDevice = $('#tabelTipeDevice').dataTable();
+            const tabelSystemLog = $('#tabelSystemLog').dataTable();
 
-            tabelTipeDevice.fnClearTable();
+            tabelSystemLog.fnClearTable();
 
+            $('.loader').hide();
 
             for (var i = 0; i < output.length; i++) {
 
                 outputDataBaris = output[i]
                 j = i + 1
-                //     "type_id": "1",
-                //     "type_name": "Monitor",
-                //     "type_code": "MTR",
-                //     "active": "yes",
-                //     "device_total": "0"
-                // }
-                tabelTipeDevice.fnAddData([
-                    "" + outputDataBaris.type_code + "",
-                    "" + outputDataBaris.type_name + "",
-                    "" + outputDataBaris.active + "",
-                    "" + outputDataBaris.device_total + " device",
-                    "</button><button type='button' onclick='bukaFormDeviceList(RecId=" + outputDataBaris.type_id + ")' class='btn btn-primary'>Tampil Perangkat</button>'"
-
+                tabelSystemLog.fnAddData([
+                    "" + j + "",
+                    "" + outputDataBaris.log_date + "",
+                    "" + outputDataBaris.username + "",
+                    "" + outputDataBaris.description + " device"
                 ]);
             } // End Fo
 
-            // $("#tabelTipeDevice").DataTable()
+            // $("#tabelSystemLog").DataTable()
 
         }
 
@@ -544,7 +573,7 @@
                     ]);
                 } // End Fo
 
-                // $("#tabelTipeDevice").DataTable()
+                // $("#tabelSystemLog").DataTable()
 
             }
 

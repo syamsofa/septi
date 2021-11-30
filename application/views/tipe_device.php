@@ -1,11 +1,12 @@
 <div class="card mb-4">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>
         <button id="" onclick="show_device_type_add()" type="button" class="btn btn-success float-right"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Type</button>
+        <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Device</button>
+        <button id="" onclick="show_device_by_excel_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Device Menggunakan Excel</button>
 
     </div>
     <div class="card-body">
-        <table id="tabelTipeDevice">
+        <table id="tabelTipeDevice" class="table table-hover  table-bordered table-striped ">
             <thead>
                 <tr>
                     <th>Kode</th>
@@ -27,30 +28,30 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Device List</h5>
-                <button id="" onclick="show_device_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah</button>
-                <button id="" onclick="show_device_by_excel_add()" type="button" class="btn btn-success "><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Pakai Excel</button>
+                <h5 class="modal-title" id="titelDeviceList">Device List</h5>
 
             </div>
             <div class="modal-body">
+                <div class="table-responsive">
 
-                <table id="tabelDeviceList" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Code</th>
-                            <th>Tahun</th>
-                            <th>BMN</th>
-                            <th>Merk</th>
-                            <th>Model</th>
-                            <th>Status</th>
-                            <th>Location</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                    <table id="tabelDeviceList" class="table table-hover  table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Code</th>
+                                <th>Tahun</th>
+                                <th>BMN</th>
+                                <th>Merk</th>
+                                <th>Model</th>
+                                <th>Status</th>
+                                <th>Location</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
 
+                </div>
             </div>
             <div class="modal-footer">
 
@@ -318,6 +319,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="control-label col-sm-3">Sub Koordinator</label>
                         <div class="col-sm-6">
@@ -392,7 +394,7 @@
             <form class="form-horizontal" name="formDeviceTypeAdd" id="formDeviceTypeAdd">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Device Type Add</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle" aria-hidden="true"></i> Device Type Add</h5>
 
                 </div>
                 <div class="modal-body" id="modal_content_device_type">
@@ -407,7 +409,7 @@
                         <label class="control-label col-sm-3">Type Code</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="type_code" id="type_code" maxlength="30" required="">
-                            <p class="help-block">A code to identify this device type. Usually contains the abbreviation of the name. (Ex : Monitor -&gt; MTR)</p>
+                            <p class="help-block">Kode untuk mengidentifikasi jenis perangkat ini. Biasanya berisi singkatan nama. (Misalnya: Monitor -> MTR)</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -431,49 +433,57 @@
 
 
 <script>
-    $.ajax({
-        type: "POST",
-        cache: false,
-        url: '<?php echo base_url(); ?>/servicesdevice/show_device_type',
-        dataType: 'json',
-        data: {},
-        success: function(output) {
-            console.log(output)
-            const tabelTipeDevice = $('#tabelTipeDevice').dataTable();
+    function tampilDeviceType() {
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: '<?php echo base_url(); ?>/servicesdevice/show_device_type',
+            dataType: 'json',
+            data: {},
+            success: function(output) {
+                console.log(output)
+                const tabelTipeDevice = $('#tabelTipeDevice').dataTable();
 
-            tabelTipeDevice.fnClearTable();
+                tabelTipeDevice.fnClearTable();
 
 
-            for (var i = 0; i < output.length; i++) {
+                for (var i = 0; i < output.length; i++) {
 
-                outputDataBaris = output[i]
-                j = i + 1
-                //     "type_id": "1",
-                //     "type_name": "Monitor",
-                //     "type_code": "MTR",
-                //     "active": "yes",
-                //     "device_total": "0"
-                // }
-                tabelTipeDevice.fnAddData([
-                    "" + outputDataBaris.type_code + "",
-                    "" + outputDataBaris.type_name + "",
-                    "" + outputDataBaris.active + "",
-                    "" + outputDataBaris.device_total + " device",
-                    "</button><button type='button' onclick='bukaFormDeviceList(RecId=" + outputDataBaris.type_id + ")' class='btn btn-primary'>Tampil Perangkat</button>'"
+                    outputDataBaris = output[i]
+                    j = i + 1
+                    //     "type_id": "1",
+                    //     "type_name": "Monitor",
+                    //     "type_code": "MTR",
+                    //     "active": "yes",
+                    //     "device_total": "0"
+                    // }
+                    tabelTipeDevice.fnAddData([
+                        "" + outputDataBaris.type_code + "",
+                        "" + outputDataBaris.type_name + "",
+                        "" + outputDataBaris.active + "",
+                        "" + outputDataBaris.device_total + " device",
+                        "<button type='button' onclick='bukaFormDeviceList(" + outputDataBaris.type_id + ",\"" + outputDataBaris.type_code + " - " + outputDataBaris.type_name + "\")' class='btn btn-primary'><i class='fas fa-eye'></i> </button><button type='button' onclick='device_type_change_status(" + outputDataBaris.type_id + ",\"active\")' class='btn btn-danger'><i class='fas fa-trash'></i> </button>"
 
-                ]);
-            } // End Fo
+                    ]);
+                } // End Fo
 
-            // $("#tabelTipeDevice").DataTable()
+                // $("#tabelTipeDevice").DataTable()
 
-        }
+            }
 
-    })
+        })
+
+
+
+    }
+    tampilDeviceType()
 </script>
 
 
 <script>
-    function bukaFormDeviceList(type_id) {
+    function bukaFormDeviceList(type_id, string_titel) {
+
+        $('#titelDeviceList').text(string_titel)
 
         $('#modalDeviceList').modal('show');
         $.ajax({
@@ -540,7 +550,7 @@
                         outputDataBaris.device_status,
                         outputDataBaris.location_name,
                         '<button type="button" class="btn btn-primary" title="Show Detail" onclick="show_device_detail(' + outputDataBaris.device_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>' +
-                        '<button type="button" class="btn btn-primary" title="Show Detail" onclick="show_device_detail()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'
+                        '<button type="button" class="btn btn-danger" title="Hapus" onclick="device_type_change_status()"><i class="fa fa-trash" aria-hidden="true"></i></button>'
                     ]);
                 } // End Fo
 
@@ -555,7 +565,7 @@
 </script>
 
 <script>
-    function show_device_detail(device_id) {
+    function show_device_detail(device_id, string_titel) {
         $('#modalDeviceDetail').modal('show');
         $.ajax({
             type: "POST",
@@ -656,9 +666,13 @@
             success: function(output) {
                 // $("#buttonSubmit").html(" Login ");
                 console.log(output)
+                if (output.sukses == true)
+                    var icon = 'success'
+                else
+                    var icon = 'error'
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
+                    icon: icon,
+                    title: 'Respon',
                     text: output.pesan,
                     footer: '.'
                 })
@@ -717,8 +731,6 @@
 <script>
     $("#formDeviceTypeAdd").submit(function(event) {
 
-        // console.log($(this).serialize())
-
         $.ajax({
             // cache: true,
             type: "POST",
@@ -727,16 +739,23 @@
             processData: false,
             url: '<?php echo base_url(); ?>/servicesdevice/add_device_type',
             dataType: 'json',
-            data: new FormData($("#formDeviceTypeAdd")[0]),
+            data: new FormData($(this)[0]),
             success: function(output) {
                 // $("#buttonSubmit").html(" Login ");
                 console.log(output)
+                tampilDeviceType()
+                if (output.sukses == true)
+                    var icon = 'success'
+                else
+                    var icon = 'error'
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
+                    icon: icon,
+                    title: 'Respon',
                     text: output.pesan,
                     footer: '.'
                 })
+                $("#modalDeviceTypeAdd").modal('hide')
+                formDeviceTypeAdd.reset()
 
 
             }
@@ -748,4 +767,49 @@
 
 
     });
+</script>
+
+<script>
+    function device_type_change_status(type_id, active) {
+        var type_id = type_id
+        var active = active
+        Swal.fire({
+            title: 'Do you want to change status to deactive?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    // cache: true,
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: true,
+                    url: '<?php echo base_url(); ?>/servicesdevice/device_type_change_status',
+                    dataType: 'json',
+                    data: {
+                        type_id: type_id,
+                        active: active
+                    },
+                    success: function(output) {
+                        // $("#buttonSubmit").html(" Login ");
+                        console.log(output)
+                        tampilDeviceType()
+                        Swal.fire('Saved!', '', 'success')
+
+                    }
+
+                })
+
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+            }
+        })
+
+
+
+    }
 </script>

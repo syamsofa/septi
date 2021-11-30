@@ -11,6 +11,19 @@ class Model_pengguna extends CI_Model
 		//call function
 		// Your own constructor code
 	}
+	public function read_pengguna()
+	{
+		$query = $this->db->query("select a.*,b.OpsiLogin,c.Nama as NamaSatker,d.Nama as NamaOrganisasi 
+		from pengguna a left join opsi_login b on a.OpsiLoginId=b.RecId
+		left join satker c on c.RecId=a.SatkerId
+		left join organisasi d on d.RecId=a.OrganisasiId;
+		", array());
+		$data = array();
+
+
+		return $query->result_array();
+	}
+
 
 	public function create_pengguna($data)
 	{
