@@ -69,70 +69,71 @@
                 <h5 class="modal-title" id="exampleModalLabel">Device Detail</h5>
 
             </div>
+
             <div class="modal-body form-horizontal" id="modal_content_device_detail">
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Device Code :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_code">3317/2021/LPT/12</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Device Type :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_type">Laptop</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Tahun Perolehan :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_tahun">2020</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">No BMN :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_bmn">3.10.01.02.002.037</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Brand :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_brand">Acer</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Model :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_model">ASPIRE 5 A514-52G-547A</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Color :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_color">Purple</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Serial Number :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_serial">NXHMJSN004034059922N00</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Photo :</label>
                     <div class="col-sm-8 form-control-static">
-                        <a class="fancybox" rel="group" href="./assets/images/device_photos/standard_device.jpg" id="dl_dev_photo_real" title="">
-                            <img src="./assets/images/device_photos/standard_device_thumbnail.jpg" class="img-thumbnail" alt="Device Image" id="dl_dev_photo" style="max-height:180px">
+                        <a class="fancybox" rel="group" target="_blank" href="" id="dl_dev_photo_real_href" title="">
+                            <img src="" id="dl_dev_photo_real" class="img-thumbnail" alt="Device Image" id="dl_dev_photo" style="max-height:180px">
                         </a>
                         <p class="help-block">Click the image to enlarge.</p>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Description :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_description"></div>
                 </div>
                 <hr class="dashed">
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Status :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_status">in use</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Location :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_location">Imam Mustofa</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Place :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_place"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Building :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_building"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="control-label col-sm-3">Floor :</label>
                     <div class="col-sm-8 form-control-static" id="dl_dev_floor"></div>
                 </div>
@@ -150,39 +151,38 @@
             <div class="form-horizontal">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Device Add</h5>
+                    <h5 class="modal-title" id="deviceAddEdit">Device Add</h5>
 
                 </div>
                 <form name="formDeviceAdd" id="formDeviceAdd" enctype="multipart/form-data">
-                    <div class="modal-body form-horizontal" id="modal_content_device_detail">
+                    <div class="modal-body " id="modal_content_device_detail">
 
+                        <input type="hidden" name="dev_id" id="dev_id" value="">
                         <div id="only_edit">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3">Device Code</label>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3">Device Code (edit)</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static" id="dev_code_view_edit"></p>
-                                    <input type="text" name="dev_code_edit" id="dev_code_edit" value="">
+                                    <p class="form-control-static" id="dev_code_edit"></p>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3">Device Type</label>
-                                <div class="col-sm-6">
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3">Device Type (edit)</label>
+                                <div class="col-sm-9">
                                     <p class="form-control-static" id="dev_type_id_edit"></p>
                                 </div>
                             </div>
                         </div>
 
                         <div id="only_add">
-                            <div class="form-group">
-                                <label class="control-label col-sm-3">Device Code</label>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3">Device Code (new)</label>
                                 <div class="col-sm-9">
-                                    <p class="form-control-static" id="dev_code_view"></p>
-                                    <input autocomplete="off" type="text" name="dev_code" id="dev_code" value="" require>
+                                    <input class="form-control" autocomplete="off" type="text" name="dev_code" id="dev_code" value="" require>
                                     <!-- <p class="help-block">If you assign 'devtype' in device code format, the code will change based on your device type.</p> -->
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-3">Device Type</label>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3">Device Type (new)</label>
                                 <div class="col-sm-9">
                                     <select class="form-control chosen-select" name="dev_type_id" id="dev_type_id" data-placeholder="Device Type" require>
                                         <option value="">--Pilih--</option>
@@ -198,7 +198,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Tahun Perolehan</label>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="text" class="form-control" name="dev_tahun" id="dev_tahun" <?php if (isset($_SESSION["new_dev_tahun"])) {
@@ -208,7 +208,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">No BMN</label>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="text" class="form-control" name="dev_bmn" id="dev_bmn" <?php if (isset($_SESSION["new_dev_bmn"])) {
@@ -218,17 +218,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Merk/Brand</label>
                             <div class="col-sm-9">
-                                <div class="input-group">
-                                    <input autocomplete="off" type="text" class="form-control" name="dev_brand" id="dev_brand" require>
-                                    <div class="input-group-addon">*</div>
-                                </div>
+                                <input autocomplete="off" type="text" class="form-control" name="dev_brand" id="dev_brand" require>
+
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Model</label>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="text" class="form-control" name="dev_model" id="dev_model" <?php if (isset($_SESSION["new_dev_model"])) {
@@ -238,7 +236,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Color</label>
                             <div class="col-sm-9">
                                 <input autocomplete="off" type="text" class="form-control" name="dev_color" id="dev_color" <?php if (isset($_SESSION["new_dev_color"])) {
@@ -248,9 +246,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Serial Number</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <div class="input-group">
                                     <input autocomplete="off" require type="text" class="form-control" name="dev_serial" id="dev_serial" require>
                                 </div>
@@ -258,7 +256,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Photo</label>
                             <div class="col-sm-6">
                                 <input type="file" class="form-control" name="dev_photo" id="dev_photo">
@@ -266,9 +264,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Asal Barang <br> Tulis Selengkapnya </br></label>
-                            <div class="col-sm-8">
+                            <div class="col-sm-9">
                                 <textarea require class="form-control tinymce" name="dev_description" id="dev_description"> <?php if (isset($_SESSION["new_dev_description"])) {
                                                                                                                                 echo $_SESSION["new_dev_description"];
                                                                                                                                 unset($_SESSION['new_dev_description']);
@@ -282,7 +280,7 @@
 
                         <hr class="dashed">
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Status</label>
                             <div class="col-sm-9">
                                 <select require class="form-control chosen-select" name="dev_status" id="dev_status" data-placeholder="Status">
@@ -306,9 +304,9 @@
                                 <?php unset($_SESSION['new_dev_status']); ?>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Ruang</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <select require class="form-control chosen-select" name="building_id" id="building_id" data-placeholder="Location">
                                     <option value="">--Pilih--</option>
                                     <?php
@@ -321,9 +319,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Sub Koordinator</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <select require class="form-control chosen-select" name="place_id" id="place_id" data-placeholder="Location">
                                     <option value="">--Pilih--</option>
                                     <?php
@@ -336,9 +334,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group row">
                             <label class="control-label col-sm-3">Penanggung Jawab</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-9">
                                 <select class="form-control chosen-select" name="location_id" id="location_id" data-placeholder="Location">
                                     <option value="">--Pilih--</option>
                                     <?php
@@ -377,7 +375,7 @@
                 </div>
                 <div class="modal-body form-horizontal" id="modal_content_device_detail">
 
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="control-label col-sm-3">Upload File</label>
                         <div class="col-sm-6">
                             <input type="file" class="form-control" name="file_excel" id="file_excel">
@@ -404,21 +402,21 @@
 
                 </div>
                 <div class="modal-body" id="modal_content_device_type">
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="control-label col-sm-3">Type Name</label>
                         <div class="col-sm-9">
                             <input type="hidden" name="type_id" id="type_id" value="">
                             <input type="text" class="form-control" name="type_name" id="type_name" maxlength="30" required="">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="control-label col-sm-3">Type Code</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="type_code" id="type_code" maxlength="30" required="">
                             <p class="help-block">Kode untuk mengidentifikasi jenis perangkat ini. Biasanya berisi singkatan nama. (Misalnya: Monitor -> MTR)</p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="control-label col-sm-3">Active</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="active" id="active">
@@ -629,11 +627,13 @@
                 $("#dl_dev_model").html(output.device_model)
                 $("#dl_dev_color").html(output.device_color)
                 $("#dl_dev_serial").html(output.device_serial)
-                $("#dl_dev_photo_real").html(output.device_photo)
+                // $("#dl_dev_photo_real").html(output.device_photo)
+                $('#dl_dev_photo_real').attr('src', output.device_photo_real)
+                $('#dl_dev_photo_real_href').attr('href', output.device_photo_real)
                 $("#dl_dev_status").html(output.device_status)
                 $("#dl_dev_location").html(output.location_name)
                 $("#dl_dev_place").html(output.place_name)
-                $("#dl_dev_floor").html(output.floor_name)
+                $("#dl_dev_building").html(output.building_name)
 
 
             }
@@ -646,6 +646,8 @@
 <script>
     function show_device_add() {
         $('#modalDeviceAdd').modal('show');
+        $('#deviceAddEdit').html('Tambah Device Baru');
+
         $("#only_edit").hide()
         $("#only_add").show()
         $("#tombolEdit").hide()
@@ -657,6 +659,8 @@
 <script>
     function show_device_edit(device_id) {
         $('#modalDeviceAdd').modal('show');
+        $('#deviceAddEdit').html('Edit Device');
+
         $("#tombolEdit").show()
         $("#tombolAdd").hide()
         $("#only_edit").show()
@@ -702,7 +706,9 @@
                 //     "building_name": null,
                 //     "floor_name": null
                 // }
-                $("#dev_code_edit").val(output.device_code)
+                $("#dev_id").val(output.device_id)
+
+                $("#dev_code_edit").html(output.device_code)
                 $("#dev_type_id_edit").html(output.type_id)
                 $("#dev_tahun").val(output.device_tahun)
                 $("#dev_bmn").val(output.device_bmn)
@@ -758,6 +764,8 @@
                 console.log(output)
                 if (output.sukses == true) {
                     formDeviceAdd.reset()
+                    $('#modalDeviceAdd').modal('hide');
+
                     var icon = 'success'
 
                 } else
@@ -833,12 +841,36 @@
             success: function(output) {
                 // $("#buttonSubmit").html(" Login ");
                 console.log(output)
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: output.pesan,
-                    footer: '.'
-                })
+                html2 = ''
+                html1 = '<div class="card-body">' +
+                    '<table id="tabelTipeDevice" class="table table-hover  table-bordered table-striped ">' +
+                    '   <thead>' +
+                    '       <tr>' +
+                    '           <th>Kode Barang</th>' +
+                    '           <th>Penyebab</th>' +
+
+                    '       </tr>' +
+                    '   </thead>' +
+
+                    '   <tbody>'
+                output.forEach(element => {
+                    html2 = html2 + '<tr><td>' + element.Pesan + 'kode barang ' + element.Data.dev_code + '</td><td>' + element.Respon.pesan + '</td></tr>'
+                });
+                html3 = '</tbody>' +
+                    '</table>' +
+                    '</div>',
+
+                    Swal.fire({
+                        title: '<strong>Notifikasi</strong>',
+                        html: html1 + html2 + html3,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+                        confirmButtonAriaLabel: 'Thumbs up, great!',
+                        cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+                        cancelButtonAriaLabel: 'Thumbs down'
+                    })
 
                 formDeviceByExcelAdd.reset()
 

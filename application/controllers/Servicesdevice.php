@@ -37,13 +37,13 @@ class Servicesdevice extends CI_Controller
     }
     public function add_device()
     {
-        // print_r($this->input->post());
+        print_r($this->input->post());
         echo json_encode($this->model_device->add_device($this->input->post(), $_FILES));
     }
     public function edit_device()
     {
         // print_r($this->input->post());
-        echo json_encode($this->model_device->add_device($this->input->post(), $_FILES));
+        echo json_encode($this->model_device->edit_device($this->input->post(), $_FILES));
     }
     public function add_device_by_excel()
     {

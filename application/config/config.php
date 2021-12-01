@@ -35,7 +35,7 @@ $config['base_url'] = 'http://localhost/septidev/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'http://'.$_SERVER['HTTP_HOST'].'/';;
 
 /*
 |--------------------------------------------------------------------------

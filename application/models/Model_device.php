@@ -103,22 +103,20 @@ class Model_device extends CI_Model
 
     public function show_device($device_serial = "", $device_status = "", $device_id = "")
     {
-        $query = "SELECT a.*, 
+        $query = "SELECT a.*,
+        CONCAT('" . base_url() . "',a.device_photo) as device_photo_real, 
+         
         b.`type_name`, 
         c.`location_name`, 
-        d.`place_id`, 
-        d.`building_id`, 
-        d.`floor_id`, 
+        a.`place_id`, 
+        a.`building_id`, 
         lp.`place_name`, 
-        lb.`building_name`, 
-        lf.`floor_name`  
+        lb.`building_name` 
         FROM device_list a 
         INNER JOIN device_type b ON a.`type_id` = b.`type_id` 
         LEFT JOIN location c ON a.`location_id` = c.`location_id` 
-        LEFT JOIN location_details d ON a.`location_id` = d.`location_id` 
-        LEFT JOIN location_place lp ON d.`place_id` = lp.`place_id`  
-        LEFT JOIN location_building lb ON d.`building_id` = lb.`building_id`  
-        LEFT JOIN location_floor lf ON d.`floor_id` = lf.`floor_id`
+        LEFT JOIN location_place lp ON a.`place_id` = lp.`place_id`  
+        LEFT JOIN location_building lb ON a.`building_id` = lb.`building_id`  
         ";
 
         // If additional param exists
@@ -150,6 +148,7 @@ class Model_device extends CI_Model
     }
     public function add_device_type($dt_type)
     {
+
         // print_r($dt_type);
         // Set var
         $type_name = addslashes(trim($dt_type["type_name"]));
@@ -180,30 +179,60 @@ class Model_device extends CI_Model
     }
     public function add_device_by_excel($file)
     {
-        print_r($file['file_excel']['tmp_name']);
+        // print_r($file['file_excel']['tmp_name']);
         require "vendor/autoload.php";
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         $spreadsheet = $reader->load($file['file_excel']['tmp_name']);
         $worksheet = $spreadsheet->getActiveSheet();
 
-        // (B) LOOP THROUGH ROWS OF CURRENT WORKSHEET
-        foreach ($worksheet->getRowIterator() as $row) {
-            // (B1) READ CELLS
-            $cellIterator = $row->getCellIterator();
-            $cellIterator->setIterateOnlyExistingCells(false);
+        // $worksheet = $spreadsheet->getActiveSheet();
+        $rows = $worksheet->toArray();
 
-            // (B2) OUTPUT HTML
-            echo "<tr>";
-            foreach ($cellIterator as $cell) {
-                echo "<td>" . $cell->getValue() . "</td>";
+        // var_dump($rows);
+
+        $arrRespon = [];
+        $baris = 1;
+        foreach ($rows as $row) {
+            if ($baris != 1) {
+                $arrayToSave = [
+                    "dev_type_id" => $row[0],
+                    "dev_code" => $row[1],
+                    "dev_bmn" => $row[2],
+                    "dev_tahun" => $row[3],
+                    "dev_brand" => $row[4],
+                    "dev_model" => $row[5],
+                    "dev_serial" => $row[6],
+                    "dev_color" => $row[7],
+                    "dev_description" => $row[8],
+                    "dev_status" => $row[9],
+                    "building_id" => $row[10],
+                    "place_id" => $row[11],
+                    "location_id" => $row[12]
+                ];
+
+                $respon = $this->add_device($arrayToSave, '');
+                if ($respon['sukses'] == 0)
+                    $pesan = 'Gagal simpan data';
+                else                    $pesan = 'Sukses simpan data';
+
+                $arrRespon[] = [
+                    "Respon" => $respon,
+                    "Data" => $arrayToSave,
+                    "Pesan" => $pesan
+                ];
             }
-            echo "</tr>";
+            $baris++;
         }
+
+        return $arrRespon;
     }
 
     public function add_device($dt_device, $dt_photo)
     {
 
+        // print_r(
+        //     $dt_device
+        // );
         $device_code        = $dt_device["dev_code"];
         $type_id            = $dt_device["dev_type_id"];
         $device_tahun       = addslashes(trim($dt_device["dev_tahun"]));
@@ -224,11 +253,12 @@ class Model_device extends CI_Model
 
         // Check if device exists
         $dev_check = count($this->show_device($device_serial));
+        $notification = "";
 
         if ($dev_check > 0) {
             // Send back with notification
             $process                         = 0;
-            $notification                    = "|<br>Device is already exists in the database!";
+            $notification                    = "Device is already exists in the database!";
             $_SESSION['new_type_id']         = $type_id;
             $_SESSION['new_dev_tahun']       = $device_tahun;
             $_SESSION['new_dev_bmn']         = $device_bmn;
@@ -245,7 +275,6 @@ class Model_device extends CI_Model
                 // Init var
                 $save_count   = 0;
                 $error_count  = 0;
-                $notification = "";
 
                 foreach ($dt_photo as $photo_name => $photo_name_value) {
                     $location  = self::lokasiFoto;
@@ -351,7 +380,7 @@ class Model_device extends CI_Model
 					'" . $this->session->userdata('Email') . "', 
 					NOW()) ";
                 $process = $this->db->query($query);
-                // $notification = "|";
+                $notification = "Berhasil simpan device";
                 // create log
                 if ($process > 0) {
                     $this->model_system->save_system_log(
@@ -452,7 +481,7 @@ class Model_device extends CI_Model
             }
             // Insert to device changes
             $query_changes = "INSERT INTO device_changes (device_id, changes, updated_by, updated_date) 
-								VALUES ('$device_id', '" . addslashes($changes) . "', '$_SESSION[username]', NOW())";
+								VALUES ('$device_id', '" . addslashes($changes) . "', '" . $this->session->userdata('Email') . "', NOW())";
             $changes_process = $this->db->query($query_changes);
 
             // Edit process
@@ -460,6 +489,7 @@ class Model_device extends CI_Model
             $save_count   = 0;
             $error_count  = 0;
             $notification = "";
+
 
             foreach ($dt_photo as $photo_name => $photo_name_value) {
                 // Set var
@@ -471,9 +501,12 @@ class Model_device extends CI_Model
 
                 // If file name isn't empty
                 if ($file_name != "") {
+
                     // Check if file is the real image
                     $check_image = getimagesize($file_tmp);
+
                     if ($check_image !== false) {
+
                         // Verify extension
                         $extensions = self::extensionsAllowed;
                         $file_ext   = explode('.', $file_name);
@@ -489,6 +522,8 @@ class Model_device extends CI_Model
 
                         // Set new name
                         $new_photo_name = $device_serial . "." . $file_ext;
+                        // print_r($file_name);
+                        print_r($new_photo_name);
 
                         // Upload file process
                         if (empty($errors) == true) {
@@ -513,7 +548,7 @@ class Model_device extends CI_Model
 
                 // If error_count == 0 > SUCCESS!
                 if ($error_count == 0 && $notification == "" && $save_count > 0) {
-                    $notification .= "<br>Photo Uploaded successfully!";
+                    $notification .= "Data berhasil diubah";
                 }
             }
 
@@ -565,7 +600,7 @@ class Model_device extends CI_Model
 							place_id = '$place_id',
 							location_id = '$location_id', 
 							device_deployment_date = NOW(), 
-							updated_by = '$_SESSION[username]', 
+							updated_by = '" . $this->session->userdata('Email') . "', 
 							updated_date = NOW(), 
 							revision = revision+1 
 							WHERE device_id = '$device_id' ";
@@ -593,6 +628,7 @@ class Model_device extends CI_Model
             $notification = "No Device Found!";
         }
 
-        return $process . $notification;
+        // return $process . $notification;
+        return ["sukses" => $process, "pesan" => $notification];
     }
 }
