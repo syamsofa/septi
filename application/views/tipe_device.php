@@ -147,215 +147,221 @@
 <div class="modal fade" id="modalDeviceAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form class="form-horizontal" name="formDeviceAdd" id="formDeviceAdd" enctype="multipart/form-data">
+            <div class="form-horizontal">
 
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Device Add</h5>
 
                 </div>
-                <div class="modal-body form-horizontal" id="modal_content_device_detail">
+                <form name="formDeviceAdd" id="formDeviceAdd" enctype="multipart/form-data">
+                    <div class="modal-body form-horizontal" id="modal_content_device_detail">
 
-                    <div id="only_edit">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3">Device Code</label>
-                            <div class="col-sm-9">
-                                <p class="form-control-static" id="dev_code_view_edit"></p>
-                                <input type="hidden" name="dev_code_edit" id="dev_code_edit" value="">
+                        <div id="only_edit">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Device Code</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static" id="dev_code_view_edit"></p>
+                                    <input type="text" name="dev_code_edit" id="dev_code_edit" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Device Type</label>
+                                <div class="col-sm-6">
+                                    <p class="form-control-static" id="dev_type_id_edit"></p>
+                                </div>
                             </div>
                         </div>
+
+                        <div id="only_add">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Device Code</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static" id="dev_code_view"></p>
+                                    <input autocomplete="off" type="text" name="dev_code" id="dev_code" value="" require>
+                                    <!-- <p class="help-block">If you assign 'devtype' in device code format, the code will change based on your device type.</p> -->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Device Type</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control chosen-select" name="dev_type_id" id="dev_type_id" data-placeholder="Device Type" require>
+                                        <option value="">--Pilih--</option>
+                                        <?php
+                                        foreach ($device_type as $row) {
+                                            echo "<option value='" . $row['type_id'] . "'>" . $row['type_name'] . "</option>";
+                                        }
+                                        ?>
+
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label class="control-label col-sm-3">Device Type</label>
+                            <label class="control-label col-sm-3">Tahun Perolehan</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" type="text" class="form-control" name="dev_tahun" id="dev_tahun" <?php if (isset($_SESSION["new_dev_tahun"])) {
+                                                                                                                                echo " value='" . $_SESSION["new_dev_tahun"] . "'";
+                                                                                                                                unset($_SESSION['new_dev_tahun']);
+                                                                                                                            } ?> require>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">No BMN</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" type="text" class="form-control" name="dev_bmn" id="dev_bmn" <?php if (isset($_SESSION["new_dev_bmn"])) {
+                                                                                                                            echo " value='" . $_SESSION["new_dev_bmn"] . "'";
+                                                                                                                            unset($_SESSION['new_dev_bmn']);
+                                                                                                                        } ?> require>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Merk/Brand</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input autocomplete="off" type="text" class="form-control" name="dev_brand" id="dev_brand" require>
+                                    <div class="input-group-addon">*</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Model</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" type="text" class="form-control" name="dev_model" id="dev_model" <?php if (isset($_SESSION["new_dev_model"])) {
+                                                                                                                                echo " value='" . $_SESSION["new_dev_model"] . "'";
+                                                                                                                                unset($_SESSION['new_dev_model']);
+                                                                                                                            } ?> require>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Color</label>
+                            <div class="col-sm-9">
+                                <input autocomplete="off" type="text" class="form-control" name="dev_color" id="dev_color" <?php if (isset($_SESSION["new_dev_color"])) {
+                                                                                                                                echo " value='" . $_SESSION["new_dev_color"] . "'";
+                                                                                                                                unset($_SESSION['new_dev_color']);
+                                                                                                                            } ?> require>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Serial Number</label>
                             <div class="col-sm-6">
-                                <p class="form-control-static" id="dev_type_id_edit"></p>
-                            </div>
-                        </div>
-                    </div>
+                                <div class="input-group">
+                                    <input autocomplete="off" require type="text" class="form-control" name="dev_serial" id="dev_serial" require>
+                                </div>
 
-                    <div id="only_add">
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label class="control-label col-sm-3">Device Code</label>
+                            <label class="control-label col-sm-3">Photo</label>
+                            <div class="col-sm-6">
+                                <input type="file" class="form-control" name="dev_photo" id="dev_photo">
+                                <p class="help-block" id="photo_info">Leave empty if you don't want to change the photo.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Asal Barang <br> Tulis Selengkapnya </br></label>
+                            <div class="col-sm-8">
+                                <textarea require class="form-control tinymce" name="dev_description" id="dev_description"> <?php if (isset($_SESSION["new_dev_description"])) {
+                                                                                                                                echo $_SESSION["new_dev_description"];
+                                                                                                                                unset($_SESSION['new_dev_description']);
+                                                                                                                            } ?></textarea>
+                                <!--<input type="text" class="form-control" name="dev_description" id="dev_description" <?php if (isset($_SESSION["new_dev_description"])) {
+                                                                                                                            echo " value='" . $_SESSION["new_dev_description"] . "'";
+                                                                                                                            unset($_SESSION['new_dev_description']);
+                                                                                                                        } ?> >-->
+                            </div>
+                        </div>
+
+                        <hr class="dashed">
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Status</label>
                             <div class="col-sm-9">
-                                <p class="form-control-static" id="dev_code_view"></p>
-                                <input autocomplete="off" type="text" name="dev_code" id="dev_code" value="" require>
-                                <!-- <p class="help-block">If you assign 'devtype' in device code format, the code will change based on your device type.</p> -->
+                                <select require class="form-control chosen-select" name="dev_status" id="dev_status" data-placeholder="Status">
+                                    <option value="">--Pilih--</option>
+                                    <option value="new" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "new") {
+                                                            echo "selected";
+                                                        } ?>>New</option>
+                                    <option value="in use" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "in use") {
+                                                                echo "selected";
+                                                            } ?>>In Use</option>
+                                    <option value="damaged" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "damaged") {
+                                                                echo "selected";
+                                                            } ?>>Damaged</option>
+                                    <option value="repaired" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "repaired") {
+                                                                    echo "selected";
+                                                                } ?>>Repaired</option>
+                                    <option value="discarded" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "discarded") {
+                                                                    echo "selected";
+                                                                } ?>>Discarded</option>
+                                </select>
+                                <?php unset($_SESSION['new_dev_status']); ?>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-3">Device Type</label>
-                            <div class="col-sm-9">
-                                <select class="form-control chosen-select" name="dev_type_id" id="dev_type_id" data-placeholder="Device Type" require>
+                            <label class="control-label col-sm-3">Ruang</label>
+                            <div class="col-sm-6">
+                                <select require class="form-control chosen-select" name="building_id" id="building_id" data-placeholder="Location">
                                     <option value="">--Pilih--</option>
                                     <?php
-                                    foreach ($device_type as $row) {
-                                        echo "<option value='" . $row['type_id'] . "'>" . $row['type_name'] . "</option>";
+                                    foreach ($location_building as $row) {
+                                        echo "<option value='" . $row['building_id'] . "'>" . $row['building_name'] . "</option>";
                                     }
                                     ?>
-
 
                                 </select>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Tahun Perolehan</label>
-                        <div class="col-sm-9">
-                            <input autocomplete="off" type="text" class="form-control" name="dev_tahun" id="dev_tahun" <?php if (isset($_SESSION["new_dev_tahun"])) {
-                                                                                                                            echo " value='" . $_SESSION["new_dev_tahun"] . "'";
-                                                                                                                            unset($_SESSION['new_dev_tahun']);
-                                                                                                                        } ?> require>
-                        </div>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Sub Koordinator</label>
+                            <div class="col-sm-6">
+                                <select require class="form-control chosen-select" name="place_id" id="place_id" data-placeholder="Location">
+                                    <option value="">--Pilih--</option>
+                                    <?php
+                                    foreach ($location_place as $row) {
+                                        echo "<option value='" . $row['place_id'] . "'>" . $row['place_name'] . "</option>";
+                                    }
+                                    ?>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">No BMN</label>
-                        <div class="col-sm-9">
-                            <input autocomplete="off" type="text" class="form-control" name="dev_bmn" id="dev_bmn" <?php if (isset($_SESSION["new_dev_bmn"])) {
-                                                                                                                        echo " value='" . $_SESSION["new_dev_bmn"] . "'";
-                                                                                                                        unset($_SESSION['new_dev_bmn']);
-                                                                                                                    } ?> require>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Merk/Brand</label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <input autocomplete="off" type="text" class="form-control" name="dev_brand" id="dev_brand" require>
-                                <div class="input-group-addon">*</div>
+                                </select>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Model</label>
-                        <div class="col-sm-9">
-                            <input autocomplete="off" type="text" class="form-control" name="dev_model" id="dev_model" <?php if (isset($_SESSION["new_dev_model"])) {
-                                                                                                                            echo " value='" . $_SESSION["new_dev_model"] . "'";
-                                                                                                                            unset($_SESSION['new_dev_model']);
-                                                                                                                        } ?> require>
-                        </div>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Penanggung Jawab</label>
+                            <div class="col-sm-6">
+                                <select class="form-control chosen-select" name="location_id" id="location_id" data-placeholder="Location">
+                                    <option value="">--Pilih--</option>
+                                    <?php
+                                    foreach ($location as $row) {
+                                        echo "<option value='" . $row['location_id'] . "'>" . $row['location_name'] . "</option>";
+                                    }
+                                    ?>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Color</label>
-                        <div class="col-sm-9">
-                            <input autocomplete="off" type="text" class="form-control" name="dev_color" id="dev_color" <?php if (isset($_SESSION["new_dev_color"])) {
-                                                                                                                            echo " value='" . $_SESSION["new_dev_color"] . "'";
-                                                                                                                            unset($_SESSION['new_dev_color']);
-                                                                                                                        } ?> require>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Serial Number</label>
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <input autocomplete="off" require type="text" class="form-control" name="dev_serial" id="dev_serial" require>
+                                </select>
                             </div>
-
                         </div>
+
+
+                    </div><!-- /.modal-dialog -->
+                    <div id="tombolAdd" class="modal-footer">
+                        <button class="btn btn-success"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Simpan Tambah</button>
                     </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Photo</label>
-                        <div class="col-sm-6">
-                            <input type="file" class="form-control" name="dev_photo" id="dev_photo">
-                            <p class="help-block" id="photo_info">Leave empty if you don't want to change the photo.</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Asal Barang <br> Tulis Selengkapnya </br></label>
-                        <div class="col-sm-8">
-                            <textarea require class="form-control tinymce" name="dev_description" id="dev_description"> <?php if (isset($_SESSION["new_dev_description"])) {
-                                                                                                                            echo $_SESSION["new_dev_description"];
-                                                                                                                            unset($_SESSION['new_dev_description']);
-                                                                                                                        } ?></textarea>
-                            <!--<input type="text" class="form-control" name="dev_description" id="dev_description" <?php if (isset($_SESSION["new_dev_description"])) {
-                                                                                                                        echo " value='" . $_SESSION["new_dev_description"] . "'";
-                                                                                                                        unset($_SESSION['new_dev_description']);
-                                                                                                                    } ?> >-->
-                        </div>
-                    </div>
-
-                    <hr class="dashed">
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Status</label>
-                        <div class="col-sm-9">
-                            <select require class="form-control chosen-select" name="dev_status" id="dev_status" data-placeholder="Status">
-                                <option value="">--Pilih--</option>
-                                <option value="new" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "new") {
-                                                        echo "selected";
-                                                    } ?>>New</option>
-                                <option value="in use" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "in use") {
-                                                            echo "selected";
-                                                        } ?>>In Use</option>
-                                <option value="damaged" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "damaged") {
-                                                            echo "selected";
-                                                        } ?>>Damaged</option>
-                                <option value="repaired" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "repaired") {
-                                                                echo "selected";
-                                                            } ?>>Repaired</option>
-                                <option value="discarded" <?php if (isset($_SESSION['new_dev_status']) && $_SESSION['new_dev_status'] == "discarded") {
-                                                                echo "selected";
-                                                            } ?>>Discarded</option>
-                            </select>
-                            <?php unset($_SESSION['new_dev_status']); ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Ruang</label>
-                        <div class="col-sm-6">
-                            <select require class="form-control chosen-select" name="building_id" id="building_id" data-placeholder="Location">
-                                <option value="">--Pilih--</option>
-                                <?php
-                                foreach ($location_building as $row) {
-                                    echo "<option value='" . $row['building_id'] . "'>" . $row['building_name'] . "</option>";
-                                }
-                                ?>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Sub Koordinator</label>
-                        <div class="col-sm-6">
-                            <select require class="form-control chosen-select" name="place_id" id="place_id" data-placeholder="Location">
-                                <option value="">--Pilih--</option>
-                                <?php
-                                foreach ($location_place as $row) {
-                                    echo "<option value='" . $row['place_id'] . "'>" . $row['place_name'] . "</option>";
-                                }
-                                ?>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Penanggung Jawab</label>
-                        <div class="col-sm-6">
-                            <select class="form-control chosen-select" name="location_id" id="location_id" data-placeholder="Location">
-                                <option value="">--Pilih--</option>
-                                <?php
-                                foreach ($location as $row) {
-                                    echo "<option value='" . $row['location_id'] . "'>" . $row['location_name'] . "</option>";
-                                }
-                                ?>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                </div><!-- /.modal-dialog -->
-                <div class="modal-footer">
-                    <button class="btn btn-success"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Simpan</button>
+                </form>
+                <div id="tombolEdit" class="modal-footer">
+                    <button onclick="editDevice()" class="btn btn-success"> <i class="fa fa-floppy-o" aria-hidden="true"></i> Simpan Perubahan</button>
                 </div>
-            </form>
+
+            </div>
         </div>
 
     </div>
@@ -462,7 +468,14 @@
                         "" + outputDataBaris.type_name + "",
                         "" + outputDataBaris.active + "",
                         "" + outputDataBaris.device_total + " device",
-                        "<button type='button' onclick='bukaFormDeviceList(" + outputDataBaris.type_id + ",\"" + outputDataBaris.type_code + " - " + outputDataBaris.type_name + "\")' class='btn btn-primary'><i class='fas fa-eye'></i> </button><button type='button' onclick='device_type_change_status(" + outputDataBaris.type_id + ",\"active\")' class='btn btn-danger'><i class='fas fa-trash'></i> </button>"
+                        () => {
+                            if (outputDataBaris.active == 'yes')
+                                var buttonDeaktivasi = "<button type='button' onclick='device_type_change_status(" + outputDataBaris.type_id + ",\"no\")' class='btn btn-danger' title='Deaktivasi'><i class='fas fa-trash'></i> </button>"
+                            else if (outputDataBaris.active == 'no')
+                                var buttonDeaktivasi = "<button type='button' onclick='device_type_change_status(" + outputDataBaris.type_id + ",\"yes\")' class='btn btn-success' title='Aktivasi'><i class='fas fa-check'></i> </button>"
+                            return "<button type='button' title='Lihat Device' onclick='bukaFormDeviceList(" + outputDataBaris.type_id + ",\"" + outputDataBaris.type_code + " - " + outputDataBaris.type_name + "\")' class='btn btn-primary'><i class='fas fa-eye'></i> </button>" + buttonDeaktivasi
+
+                        }
 
                     ]);
                 } // End Fo
@@ -550,7 +563,7 @@
                         outputDataBaris.device_status,
                         outputDataBaris.location_name,
                         '<button type="button" class="btn btn-primary" title="Show Detail" onclick="show_device_detail(' + outputDataBaris.device_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>' +
-                        '<button type="button" class="btn btn-danger" title="Hapus" onclick="device_type_change_status()"><i class="fa fa-trash" aria-hidden="true"></i></button>'
+                        '<button type="button" class="btn btn-success" title="Edit" onclick="show_device_edit(' + outputDataBaris.device_id + ')">Edit</button>'
                     ]);
                 } // End Fo
 
@@ -633,6 +646,85 @@
 <script>
     function show_device_add() {
         $('#modalDeviceAdd').modal('show');
+        $("#only_edit").hide()
+        $("#only_add").show()
+        $("#tombolEdit").hide()
+        $("#tombolAdd").show()
+
+
+    }
+</script>
+<script>
+    function show_device_edit(device_id) {
+        $('#modalDeviceAdd').modal('show');
+        $("#tombolEdit").show()
+        $("#tombolAdd").hide()
+        $("#only_edit").show()
+        $("#only_add").hide()
+
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: '<?php echo base_url(); ?>/servicesdevice/show_device_by_id',
+            dataType: 'json',
+            data: {
+                device_id: device_id
+            },
+            success: function(output) {
+                console.log(output)
+                output = output[0]
+                // {
+                //     "device_id": "9",
+                //     "type_id": "10",
+                //     "device_code": "3317/2021/LPT/3",
+                //     "device_bmn": "3.10.01.02.002.033",
+                //     "device_tahun": "2020",
+                //     "device_brand": "Lenovo",
+                //     "device_model": "Ideapad 5 14IIL05",
+                //     "device_serial": "MP1VDQR9",
+                //     "device_color": "Grey",
+                //     "device_description": "",
+                //     "device_photo": "./assets/images/device_photos/standard_device.jpg",
+                //     "device_status": "in use",
+                //     "building_id": "0",
+                //     "place_id": "0",
+                //     "location_id": "20",
+                //     "device_deployment_date": "2021-02-07 13:55:53",
+                //     "created_by": "imustofa",
+                //     "created_date": "2021-02-06 20:52:31",
+                //     "updated_by": "imustofa",
+                //     "updated_date": "2021-02-07 13:55:53",
+                //     "revision": "1",
+                //     "type_name": "Laptop",
+                //     "location_name": "Miyan Andi Irawan",
+                //     "floor_id": "0",
+                //     "place_name": null,
+                //     "building_name": null,
+                //     "floor_name": null
+                // }
+                $("#dev_code_edit").val(output.device_code)
+                $("#dev_type_id_edit").html(output.type_id)
+                $("#dev_tahun").val(output.device_tahun)
+                $("#dev_bmn").val(output.device_bmn)
+                $("#dev_brand").val(output.device_brand)
+                $("#dev_model").val(output.device_model)
+                $("#dev_color").val(output.device_color)
+                $("#dev_serial").val(output.device_serial)
+                $("#dev_photo_real").val(output.device_photo)
+                $("#dev_status").val(output.device_status)
+                $("#dev_description").val(output.device_description)
+                $("#dev_location").val(output.location_name)
+                $("#dev_place").val(output.place_name)
+                $("#dev_floor").val(output.floor_name)
+                $("#building_id").val(output.building_id)
+                $("#place_id").val(output.place_id)
+                $("#location_id").val(output.location_id)
+
+
+            }
+
+        })
+
 
     }
 </script>
@@ -649,7 +741,41 @@
 
     }
 </script>
+<script>
+    function editDevice() {
+        console.log('edit running')
+        $.ajax({
+            // cache: true,
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: '<?php echo base_url(); ?>/servicesdevice/edit_device',
+            dataType: 'json',
+            data: new FormData($("#formDeviceAdd")[0]),
+            success: function(output) {
+                // $("#buttonSubmit").html(" Login ");
+                console.log(output)
+                if (output.sukses == true) {
+                    formDeviceAdd.reset()
+                    var icon = 'success'
 
+                } else
+                    var icon = 'error'
+                Swal.fire({
+                    icon: icon,
+                    title: 'Respon',
+                    text: output.pesan,
+                    footer: '.'
+                })
+
+
+
+            }
+
+        })
+    }
+</script>
 <script>
     $("#formDeviceAdd").submit(function(event) {
 
@@ -770,11 +896,9 @@
 </script>
 
 <script>
-    function device_type_change_status(type_id, active) {
-        var type_id = type_id
-        var active = active
+    function device_type_change_status(type_id, status) {
         Swal.fire({
-            title: 'Do you want to change status to deactive?',
+            title: 'Apakah Anda ingin mengubah status menjadi ' + status + '?',
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Save',
@@ -786,19 +910,27 @@
                     // cache: true,
                     type: "POST",
                     cache: false,
-                    contentType: false,
-                    processData: true,
                     url: '<?php echo base_url(); ?>/servicesdevice/device_type_change_status',
                     dataType: 'json',
                     data: {
                         type_id: type_id,
-                        active: active
+                        status: status
                     },
                     success: function(output) {
-                        // $("#buttonSubmit").html(" Login ");
                         console.log(output)
                         tampilDeviceType()
-                        Swal.fire('Saved!', '', 'success')
+                        if (output.sukses == true)
+                            var icon = 'success'
+                        else
+                            var icon = 'error'
+
+
+                        Swal.fire({
+                            icon: icon,
+                            title: 'Respon',
+                            text: output.pesan,
+                            footer: '.'
+                        })
 
                     }
 

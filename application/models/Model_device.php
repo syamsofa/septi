@@ -2,6 +2,8 @@
 
 class Model_device extends CI_Model
 {
+    public const extensionsAllowed = array("png", "jpg", "jpeg", "gif");
+    public const lokasiFoto = "./assets/images/device_photos/";
     public function __construct()
     {
         // $this->load->library('lib');
@@ -246,7 +248,7 @@ class Model_device extends CI_Model
                 $notification = "";
 
                 foreach ($dt_photo as $photo_name => $photo_name_value) {
-                    $location  = "./assets/images/device_photos/";
+                    $location  = self::lokasiFoto;
                     $file_name = $_FILES[$photo_name]['name'];
                     $file_size = $_FILES[$photo_name]['size'];
                     $file_tmp  = $_FILES[$photo_name]['tmp_name'];
@@ -257,7 +259,7 @@ class Model_device extends CI_Model
                         $check_image = getimagesize($file_tmp);
                         if ($check_image !== false) {
                             // Verify extension
-                            $extensions = array("png", "jpg", "jpeg", "gif");
+                            $extensions = self::extensionsAllowed;
                             $file_ext   = explode('.', $file_name);
                             $file_ext   = strtolower(end($file_ext));
 
@@ -302,7 +304,7 @@ class Model_device extends CI_Model
                 $device_photo         = $location . $new_photo_name;
                 $process_photo_upload = $save_count;
             } else {
-                $device_photo         = "./assets/images/device_photos/standard_device.jpg";
+                $device_photo         = self::lokasiFoto . "standard_device.jpg";
                 $process_photo_upload = "1";
             }
             // if photo upload success 
@@ -377,5 +379,220 @@ class Model_device extends CI_Model
 
 
         return ["sukses" => $process, "pesan" => $notification];
+    }
+    public function edit_device($dt_device, $dt_photo)
+    {
+        // Set var
+        $device_id          = $dt_device["dev_id"];
+        $device_tahun       = addslashes(trim($dt_device["dev_tahun"]));
+        $device_bmn         = addslashes(trim($dt_device["dev_bmn"]));
+        $device_brand       = addslashes(trim($dt_device["dev_brand"]));
+        $device_model       = addslashes(trim($dt_device["dev_model"]));
+        $device_color       = addslashes(trim($dt_device["dev_color"]));
+        $device_serial      = addslashes(trim($dt_device["dev_serial"]));
+        $device_description = trim($dt_device["dev_description"]);
+        $device_status      = $dt_device["dev_status"];
+        $building_id        = $dt_device["building_id"];
+        $place_id           = $dt_device["place_id"];
+        $location_id        = $dt_device["location_id"];
+
+        // Check if device exists
+        $dev_check = count($this->show_device("", "", $device_id));
+        if ($dev_check > 0) {
+            // Get current values
+            $dev_curr_value = $this->show_device("", "", $device_id);
+            foreach ($dev_curr_value as $data) {
+                $c_device_tahun       = $data["device_tahun"];
+                $c_device_bmn         = $data["device_bmn"];
+                $c_device_brand       = $data["device_brand"];
+                $c_device_model       = $data["device_model"];
+                $c_device_color       = $data["device_color"];
+                $c_device_serial      = $data["device_serial"];
+                $c_device_description = $data["device_description"];
+                $c_device_photo       = $data["device_photo"];
+                $c_device_status      = $data["device_status"];
+                $c_building_id        = $data["building_id"];
+                $c_place_id           = $data["place_id"];
+                $c_location_id        = $data["location_id"];
+            }
+            // Changes check
+            $changes = '';
+            if ($device_tahun != $c_device_tahun) {
+                $changes .= "Dev tahun : $c_device_tahun -> $device_tahun. ";
+            }
+            if ($device_bmn != $c_device_bmn) {
+                $changes .= "Dev bmn : $c_device_bmn -> $device_bmn. ";
+            }
+            if ($device_brand != $c_device_brand) {
+                $changes .= "Dev brand : $c_device_brand -> $device_brand. ";
+            }
+            if ($device_model != $c_device_model) {
+                $changes .= "Dev model : $c_device_model -> $device_model. ";
+            }
+            if ($device_color != $c_device_color) {
+                $changes .= "Dev color : $c_device_color -> $device_color. ";
+            }
+            if ($device_serial != $c_device_serial) {
+                $changes .= "Dev serial : $c_device_serial -> $device_serial. ";
+            }
+            if ($device_description != $c_device_description) {
+                $changes .= "Dev description : $c_device_description -> $device_description. ";
+            }
+            if ($device_status != $c_device_status) {
+                $changes .= "Dev status : $c_device_status -> $device_status. ";
+            }
+            if ($building_id != $c_location_id) {
+                $changes .= "Dev building id : $c_building_id -> $building_id. ";
+            }
+            if ($location_id != $c_location_id) {
+                $changes .= "Dev place id : $c_place_id -> $place_id. ";
+            }
+            if ($location_id != $c_location_id) {
+                $changes .= "Dev location id : $c_location_id -> $location_id. ";
+            }
+            // Insert to device changes
+            $query_changes = "INSERT INTO device_changes (device_id, changes, updated_by, updated_date) 
+								VALUES ('$device_id', '" . addslashes($changes) . "', '$_SESSION[username]', NOW())";
+            $changes_process = $this->db->query($query_changes);
+
+            // Edit process
+            // Init var
+            $save_count   = 0;
+            $error_count  = 0;
+            $notification = "";
+
+            foreach ($dt_photo as $photo_name => $photo_name_value) {
+                // Set var
+                $location  = self::lokasiFoto;
+                $file_name = $_FILES[$photo_name]['name'];
+                $file_size = $_FILES[$photo_name]['size'];
+                $file_tmp  = $_FILES[$photo_name]['tmp_name'];
+                $file_type = $_FILES[$photo_name]['type'];
+
+                // If file name isn't empty
+                if ($file_name != "") {
+                    // Check if file is the real image
+                    $check_image = getimagesize($file_tmp);
+                    if ($check_image !== false) {
+                        // Verify extension
+                        $extensions = self::extensionsAllowed;
+                        $file_ext   = explode('.', $file_name);
+                        $file_ext   = strtolower(end($file_ext));
+                        if (in_array($file_ext, $extensions) === false) {
+                            $errors[] = "<br>Extension not allowed, please use png, jpg or gif file.";
+                        }
+
+                        // Verify size
+                        if ($file_size > 2097152) {
+                            $errors[] = "<br>File size must be less than 2 MB.";
+                        }
+
+                        // Set new name
+                        $new_photo_name = $device_serial . "." . $file_ext;
+
+                        // Upload file process
+                        if (empty($errors) == true) {
+                            // Upload
+                            move_uploaded_file($file_tmp, $location . $new_photo_name);
+                            // Create thumb
+                            $this->model_inventory->create_thumbnail($location . $new_photo_name, $location . $device_serial . "_thumbnail." . $file_ext, "200", "150");
+                            $save_count = $save_count + 1;
+                        } else {
+                            // Set error count flag and notification
+                            $error_count = $error_count + 1;
+                            foreach ($errors as $upload_error) {
+                                $notification .= $upload_error;
+                            }
+                        }
+                    }
+                } else {
+                    $new_photo_name = "";
+                    // nomor asal :P
+                    $save_count = $save_count + 5;
+                }
+
+                // If error_count == 0 > SUCCESS!
+                if ($error_count == 0 && $notification == "" && $save_count > 0) {
+                    $notification .= "<br>Photo Uploaded successfully!";
+                }
+            }
+
+            // if photo name empty
+            if ($new_photo_name != "") {
+                $process_photo_upload = $save_count;
+                $device_photo         = $location . $new_photo_name;
+                $query_photo          = "device_photo = '$device_photo', ";
+            }
+            // empty (dont update photo)
+            else {
+                $process_photo_upload = "1";
+                $query_photo          = "";
+                // If serial changes, update photo name in db, change photo name file
+                if ($c_device_photo != self::lokasiFoto . "standard_device.jpg" && $c_device_serial != $device_serial) {
+                    $device_photo = str_replace($c_device_serial, $device_serial, $c_device_photo);
+                    $query_photo  = "device_photo = '$device_photo', ";
+
+                    // photo name
+                    rename($c_device_photo, $device_photo);
+
+                    // thumbnail name
+                    $newnames    = explode(".", strrev($device_photo), 2);
+                    $newname_ext = strrev($newnames[0]);
+                    $newname     = strrev($newnames[1]) . "_thumbnail." . $newname_ext;
+                    $thumbnails  = explode(".", strrev($c_device_photo), 2);
+                    $thumb_ext   = strrev($thumbnails[0]);
+                    $thumb_name  = strrev($thumbnails[1]);
+                    $thumb_name  = rename($thumb_name . "_thumbnail." . $thumb_ext, $newname);
+                }
+            }
+
+
+            // if photo upload success 
+            if ($process_photo_upload > 0) {
+                // Update database & create notification
+                $query = "UPDATE device_list 
+							SET 
+							device_tahun = '$device_tahun',
+							device_bmn = '$device_bmn',
+							device_brand = '$device_brand', 
+							device_model = '$device_model', 
+							device_color = '$device_color', 
+							device_serial = '$device_serial', 
+							device_description = '$device_description', 
+							$query_photo  
+							device_status = '$device_status', 
+							building_id = '$building_id',
+							place_id = '$place_id',
+							location_id = '$location_id', 
+							device_deployment_date = NOW(), 
+							updated_by = '$_SESSION[username]', 
+							updated_date = NOW(), 
+							revision = revision+1 
+							WHERE device_id = '$device_id' ";
+                $process = $this->db->query($query);
+                // create log
+                if ($process > 0) {
+                    $this->model_system->save_system_log($this->session->userdata('Email'), $query);
+                }
+            } else {
+                $process = 0;
+                $_SESSION['new_dev_tahun']       = $device_tahun;
+                $_SESSION['new_dev_bmn']         = $device_bmn;
+                $_SESSION['new_dev_brand']       = $device_brand;
+                $_SESSION['new_dev_model']       = $device_model;
+                $_SESSION['new_dev_color']       = $device_color;
+                $_SESSION['new_dev_serial']      = $device_serial;
+                $_SESSION['new_dev_description'] = $device_description;
+                $_SESSION['new_dev_status']      = $device_status;
+                $_SESSION['new_building_id']     = $building_id;
+                $_SESSION['new_place_id']        = $place_id;
+                $_SESSION['new_location_id']     = $location_id;
+            }
+        } else {
+            $process      = 0;
+            $notification = "No Device Found!";
+        }
+
+        return $process . $notification;
     }
 }
