@@ -6,20 +6,22 @@
 
     </div>
     <div class="card-body">
-        <table id="tabelTipeDevice" class="table table-hover  table-bordered table-striped ">
-            <thead>
-                <tr>
-                    <th>Kode</th>
-                    <th>Tipe</th>
-                    <th>Aktiv</th>
-                    <th>Jumlah Device</th>
-                    <th>Detil</th>
+        <div class="table-responsive">
+            <table id="tabelTipeDevice" class="table table-hover  table-bordered table-striped ">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Tipe</th>
+                        <th>Aktiv</th>
+                        <th>Jumlah Device</th>
+                        <th>Detil</th>
 
-                </tr>
-            </thead>
+                    </tr>
+                </thead>
 
-            <tbody></tbody>
-        </table>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 

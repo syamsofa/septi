@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.4.8",
-		"phpoffice/phpspreadsheet": "^1.20"
+		"phpoffice/phpspreadsheet": "^1.20",
+		"fpdf/fpdf": "^1.83"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

@@ -27,6 +27,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <style>
+        html {
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -141,7 +146,7 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><?php echo $judul; ?></li>
                     </ol>
-                    <?php $this->load->view($menu,$kamus); ?>
+                    <?php $this->load->view($menu, $kamus); ?>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
