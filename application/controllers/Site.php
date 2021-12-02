@@ -10,6 +10,7 @@ class Site extends CI_Controller
         $this->load->model('model_location');
         $this->load->model('model_location_building');
         $this->load->model('model_location_place');
+        $this->load->model('model_inventory');
     }
 
     public function index()
@@ -29,13 +30,13 @@ class Site extends CI_Controller
     }
     public function dashboard()
     {
-        
+
         $data = array(
             'menu' => $this->uri->segment(2),
             'judul' => 'Dashboard',
             'kamus' =>
             [
-                "device_type" => $this->model_device->show_device_type("", "", "yes"),                
+                "device_type" => $this->model_device->show_device_type("", "", "yes"),
                 "location" => $this->model_location->show_location(),
                 "location_building" => $this->model_location_building->show_location_building(),
                 "location_place" => $this->model_location->show_location_detail_by_type('place')
@@ -52,7 +53,7 @@ class Site extends CI_Controller
             'judul' => 'Tipe Device',
             'kamus' =>
             [
-                "device_type" => $this->model_device->show_device_type("", "", "yes"),                
+                "device_type" => $this->model_device->show_device_type("", "", "yes"),
                 "location" => $this->model_location->show_location(),
                 "location_building" => $this->model_location_building->show_location_building(),
                 "location_place" => $this->model_location->show_location_detail_by_type('place')
@@ -117,6 +118,24 @@ class Site extends CI_Controller
 
         $this->load->view('site', $data);
     }
+    public function report()
+    {
+        $data = array(
+            'menu' => $this->uri->segment(2),
+            'judul' => 'Report ',
+            'kamus' =>
+            [
+                "device_type" => $this->model_device->show_device_type("", "", "yes"),
+                "location" => $this->model_location->show_location(),
+                "location_building" => $this->model_location_building->show_location_building(),
+                "location_place" => $this->model_location->show_location_detail_by_type('place')
+            ]
+
+
+        );
+
+        $this->load->view('site', $data);
+    }
     public function kf()
     {
         $data = array(
@@ -168,5 +187,11 @@ class Site extends CI_Controller
 
         session_destroy();
         redirect('login');
+    }
+    function okes()
+
+    {
+
+        $this->model_inventory->setting_data("inventory_name");
     }
 }

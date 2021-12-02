@@ -66,4 +66,10 @@ class Model_inventory extends CI_Model
             exit;
         }
     }
+    public function setting_data($setting_name)
+    {
+        $query         = "SELECT setting_value FROM system_settings WHERE setting_name = '$setting_name' AND active = 'yes'";
+        $setting_value = $this->db->query($query);
+        return $setting_value->result()[0]->setting_value;
+    }
 }

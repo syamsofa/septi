@@ -29,7 +29,7 @@
 
     <style>
         html {
-            font-size: 13px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -130,6 +130,20 @@
                                 </a>
 
                             </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReport" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file"></i></div>
+                            Report
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseReport" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="<?php echo base_url() . "site/report"; ?>">
+                                    Report
+                                </a>
+
+                            </nav>
+                           
                         </div>
                     </div>
                 </div>
