@@ -242,10 +242,13 @@ class Model_device extends CI_Model
         $device_color       = addslashes(trim($dt_device["dev_color"]));
         $device_serial      = addslashes(trim($dt_device["dev_serial"]));
         $device_description = trim($dt_device["dev_description"]);
+
         $device_status      = $dt_device["dev_status"];
-        $building_id        = $dt_device["building_id"];
-        $place_id           = $dt_device["place_id"];
-        $location_id        = $dt_device["location_id"];
+
+        $building_id        = empty($dt_device["building_id"]) ? '' : $dt_device["building_id"];
+        $place_id           = empty($dt_device["place_id"]) ? '' : $dt_device["place_id"];
+        $location_id        = empty($dt_device["location_id"]) ? '' : $dt_device["location_id"];
+
         $device_deployment_date = "0000-00-00 00:00:00";
         if ($device_status != "new") {
             $device_deployment_date = "NOW()";
