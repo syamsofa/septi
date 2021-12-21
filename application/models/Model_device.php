@@ -421,9 +421,9 @@ class Model_device extends CI_Model
         $device_serial      = addslashes(trim($dt_device["dev_serial"]));
         $device_description = trim($dt_device["dev_description"]);
         $device_status      = $dt_device["dev_status"];
-        $building_id        = $dt_device["building_id"];
-        $place_id           = $dt_device["place_id"];
-        $location_id        = $dt_device["location_id"];
+        $building_id        = empty($dt_device["building_id"]) ? '' : $dt_device["building_id"];
+        $place_id           = empty($dt_device["place_id"]) ? '' : $dt_device["place_id"];
+        $location_id        = empty($dt_device["location_id"]) ? '' : $dt_device["location_id"];
 
         // Check if device exists
         $dev_check = count($this->show_device("", "", $device_id));
