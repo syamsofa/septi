@@ -43,6 +43,7 @@
                                 <th>Code</th>
                                 <th>Tahun</th>
                                 <th>BMN</th>
+                                <th>Serial</th>
                                 <th>Merk</th>
                                 <th>Model</th>
                                 <th>Status</th>
@@ -558,6 +559,7 @@
 
                         outputDataBaris.device_tahun,
                         outputDataBaris.device_bmn,
+                        outputDataBaris.device_serial,
                         outputDataBaris.device_brand,
                         outputDataBaris.device_model,
                         outputDataBaris.device_status,
